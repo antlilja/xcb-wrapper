@@ -35,10 +35,10 @@ namespace xcbw {
         e_cursor = 16384
     };
 
-    using wa_mask = detail::enum_bit_field<wa_mask_bits>;
+    using wa_mask_t = detail::enum_bit_field<wa_mask_bits>;
 
     template <typename... Values>
-    using window_attributes_t = detail::mask_and_values<wa_mask, uint32_t, Values...>;
+    using window_attributes_t = detail::mask_and_values<wa_mask_t, uint32_t, Values...>;
 
     template <typename... Values>
     inline static constexpr window_attributes_t<Values...>
