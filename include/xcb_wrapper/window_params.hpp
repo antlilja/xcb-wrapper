@@ -44,6 +44,7 @@ namespace xcbw {
 
     // Attributes
     using back_pixel = detail::attribute<wa_mask_bits, wa_mask_bits::e_back_pixel>;
+    using window_cursor = detail::attribute<wa_mask_bits, wa_mask_bits::e_cursor>;
 
     enum class event_mask_bits : uint32_t {
         e_no_event = 0,
