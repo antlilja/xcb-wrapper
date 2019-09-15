@@ -42,6 +42,8 @@ namespace xcbw {
 
         void free_cursor(connection_t& c);
 
+        inline operator uint32_t() const { return m_id; }
+
     private:
         uint32_t m_id = 0;
     };
