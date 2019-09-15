@@ -10,14 +10,14 @@
 #include <optional>
 
 namespace xcbw {
-    void warp_pointer(const connection& c, std::optional<window> src_window,
-                      std::optional<window> dst_window, point<int16_t> src_pos,
-                      point<int16_t> src_size, point<int16_t> dst_pos);
+    void warp_pointer(const connection_t& c, std::optional<window_t> src_window,
+                      std::optional<window_t> dst_window, point_t<int16_t> src_pos,
+                      point_t<int16_t> src_size, point_t<int16_t> dst_pos);
 
-    class cursor_context {
+    class cursor_context_t {
     public:
-        cursor_context(connection& c, screen s);
-        ~cursor_context();
+        cursor_context_t(connection_t& c, screen_t s);
+        ~cursor_context_t();
 
         inline operator void*() const { return m_pointer; }
 
@@ -25,22 +25,22 @@ namespace xcbw {
         void* m_pointer;
     };
 
-    class cursor {
+    class cursor_t {
     public:
-        explicit cursor(uint32_t id) : m_id(id) {}
-        cursor(connection& c, pixmap source, pixmap mask, uint16_t fore_red, uint16_t fore_green,
-               uint16_t fore_blue, uint16_t back_red, uint16_t back_green, uint16_t back_blue,
-               uint16_t x, uint16_t y);
+        explicit cursor_t(uint32_t id) : m_id(id) {}
+        cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
+                 uint16_t fore_green, uint16_t fore_blue, uint16_t back_red, uint16_t back_green,
+                 uint16_t back_blue, uint16_t x, uint16_t y);
 
-        cursor(connection& c, pixmap source, pixmap mask, uint16_t fore_red, uint16_t fore_green,
-               uint16_t fore_blue, uint16_t back_red, uint16_t back_green, uint16_t back_blue,
-               point<uint16_t> pos)
-            : cursor(c, source, mask, fore_red, fore_blue, fore_green, back_red, back_green,
-                     back_blue, pos.x, pos.y) {}
+        cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
+                 uint16_t fore_green, uint16_t fore_blue, uint16_t back_red, uint16_t back_green,
+                 uint16_t back_blue, point_t<uint16_t> pos)
+            : cursor_t(c, source, mask, fore_red, fore_blue, fore_green, back_red, back_green,
+                       back_blue, pos.x, pos.y) {}
 
-        cursor(connection& c, cursor_context context, const char* name);
+        cursor_t(connection_t& c, cursor_context_t context, const char* name);
 
-        void free_cursor(connection& c);
+        void free_cursor(connection_t& c);
 
     private:
         uint32_t m_id = 0;

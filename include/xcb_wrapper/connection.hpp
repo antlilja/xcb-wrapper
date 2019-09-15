@@ -5,22 +5,22 @@
 #include "xcb_wrapper/event.hpp"
 
 namespace xcbw {
-    class connection {
+    class connection_t {
     public:
-        connection(const char* display_name, int* screen_p);
-        ~connection();
+        connection_t(const char* display_name, int* screen_p);
+        ~connection_t();
 
-        connection(const connection& o) = delete;
-        connection& operator=(const connection& o) = delete;
+        connection_t(const connection_t& o) = delete;
+        connection_t& operator=(const connection_t& o) = delete;
 
-        connection(connection&& o) noexcept = default;
-        connection& operator=(connection&& o) noexcept = default;
+        connection_t(connection_t&& o) noexcept = default;
+        connection_t& operator=(connection_t&& o) noexcept = default;
 
         void* get_ptr() const { return m_pointer; }
 
         void flush();
 
-        generic_event poll_for_events();
+        generic_event_t poll_for_events();
 
     private:
         void* m_pointer = nullptr;

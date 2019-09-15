@@ -103,27 +103,28 @@ namespace xcbw {
     } // namespace detail
 
     template <typename T>
-    struct point {
+    struct point_t {
         static_assert(std::is_arithmetic<T>::value, "T is required to be an arithmetic type");
 
-        point() = default;
-        point(T x, T y) : x(x), y(y) {}
+        point_t() = default;
+        point_t(T x, T y) : x(x), y(y) {}
 
         T x = 0;
         T y = 0;
     };
 
-    using colormap = detail::xcb_value<uint32_t>;
-    using drawable = detail::xcb_value<uint32_t>;
+    using colormap_t = detail::xcb_value<uint32_t>;
+    using drawable_t = detail::xcb_value<uint32_t>;
 
-    class pixmap {
+    class pixmap_t {
     public:
-        explicit pixmap(uint32_t id) : m_id(id) {}
-        pixmap(connection& c, uint8_t depth, drawable _drawable, uint16_t width, uint16_t height);
-        pixmap(connection& c, uint8_t depth, drawable _drawable, point<uint16_t> size)
-            : pixmap(c, depth, _drawable, size.x, size.y) {}
+        explicit pixmap_t(uint32_t id) : m_id(id) {}
+        pixmap_t(connection_t& c, uint8_t depth, drawable_t drawable, uint16_t width,
+                 uint16_t height);
+        pixmap_t(connection_t& c, uint8_t depth, drawable_t drawable, point_t<uint16_t> size)
+            : pixmap_t(c, depth, drawable, size.x, size.y) {}
 
-        void free_pixmap(connection& c);
+        void free_pixmap(connection_t& c);
 
         inline operator uint32_t() const { return m_id; }
 
@@ -132,18 +133,3 @@ namespace xcbw {
     };
 
 } // namespace xcbw
-
-#if defined(_WIN32)
-#    define XCBW_BREAKPOINT __debugbreak();
-#elif defined(__linux__)
-#    define XCBW_BREAKPOINT asm("int $3");
-#endif
-
-#define XCBW_ASSERT(x)                                                                  \
-    {                                                                                   \
-        if (!(x)) {                                                                     \
-            std::cerr << "Assertion: " << #x << " failed in function: " << __FUNCTION__ \
-                      << " at line: " << __LINE__ << " in file: " << __FILE__ << '\n';  \
-            XCBW_BREAKPOINT                                                             \
-        }                                                                               \
-    }

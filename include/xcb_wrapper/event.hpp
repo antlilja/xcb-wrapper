@@ -6,7 +6,7 @@
 #include <cstdint>
 
 namespace xcbw {
-    enum class event_type {
+    enum class event_type_t {
         e_key_press = 2,
         e_key_release = 3,
         e_button_press = 4,
@@ -22,16 +22,16 @@ namespace xcbw {
         e_client_message = 33
     };
 
-    class generic_event {
+    class generic_event_t {
     public:
-        explicit generic_event(void* pointer);
-        ~generic_event();
+        explicit generic_event_t(void* pointer);
+        ~generic_event_t();
 
-        generic_event(const generic_event& o) = delete;
-        generic_event& operator=(const generic_event& o) = delete;
+        generic_event_t(const generic_event_t& o) = delete;
+        generic_event_t& operator=(const generic_event_t& o) = delete;
 
-        generic_event(generic_event&& o) noexcept = default;
-        generic_event& operator=(generic_event&& o) noexcept = default;
+        generic_event_t(generic_event_t&& o) noexcept = default;
+        generic_event_t& operator=(generic_event_t&& o) noexcept = default;
 
         bool is_null() const { return (m_pointer == nullptr); }
 
@@ -39,8 +39,8 @@ namespace xcbw {
         uint16_t get_sequence() const;
         uint32_t get_full_sequence() const;
 
-        event_type get_event_type() const {
-            return static_cast<event_type>(get_response_type() & ~0x80);
+        event_type_t get_event_type() const {
+            return static_cast<event_type_t>(get_response_type() & ~0x80);
         }
 
         void* get_pointer() const { return m_pointer; }
@@ -49,7 +49,7 @@ namespace xcbw {
         mutable void* m_pointer = nullptr;
     };
 
-    class key_press_event final : public generic_event {
+    class key_press_event_t final : public generic_event_t {
     public:
         uint8_t get_detail() const;
         uint32_t get_time() const;
@@ -66,16 +66,16 @@ namespace xcbw {
         uint8_t get_same_screen() const;
     };
 
-    using key_release_event = key_press_event;
+    using key_release_event_t = key_press_event_t;
 
-    using button_press_event = key_press_event;
-    using button_release_event = button_press_event;
+    using button_press_event_t = key_press_event_t;
+    using button_release_event_t = button_press_event_t;
 
-    using motion_notify_event = key_press_event;
+    using motion_notify_event_t = key_press_event_t;
 
-    class enter_notify_event final : public generic_event {
+    class enter_notify_event_t final : public generic_event_t {
     public:
-        enter_notify_event(const generic_event event) : generic_event(event.get_pointer()) {}
+        enter_notify_event_t(const generic_event_t event) : generic_event_t(event.get_pointer()) {}
 
         uint8_t get_detail() const;
         uint32_t get_time() const;
@@ -93,11 +93,11 @@ namespace xcbw {
         uint8_t get_same_screen_focus() const;
     };
 
-    using leave_notify_event = enter_notify_event;
+    using leave_notify_event_t = enter_notify_event_t;
 
-    class focus_in_event final : public generic_event {
+    class focus_in_event_t final : public generic_event_t {
     public:
-        focus_in_event(const generic_event event) : generic_event(event.get_pointer()) {}
+        focus_in_event_t(const generic_event_t event) : generic_event_t(event.get_pointer()) {}
 
         uint8_t get_detail() const;
         // FIXME: add window
@@ -105,18 +105,18 @@ namespace xcbw {
         uint8_t get_mode() const;
     };
 
-    using focus_out_event = focus_in_event;
+    using focus_out_event_t = focus_in_event_t;
 
-    class keymap_notify_event final : public generic_event {
+    class keymap_notify_event_t final : public generic_event_t {
     public:
-        keymap_notify_event(const generic_event event) : generic_event(event.get_pointer()) {}
+        keymap_notify_event_t(const generic_event_t event) : generic_event_t(event.get_pointer()) {}
 
         uint8_t* get_keys() const;
     };
 
-    class expose_event final : public generic_event {
+    class expose_event_t final : public generic_event_t {
     public:
-        expose_event(const generic_event event) : generic_event(event.get_pointer()) {}
+        expose_event_t(const generic_event_t event) : generic_event_t(event.get_pointer()) {}
 
         // FIXME: add window
 
@@ -129,27 +129,29 @@ namespace xcbw {
         uint16_t get_count() const;
     };
 
-    union client_message_data {
+    union client_message_data_t {
         uint8_t data8[20];
         uint16_t data16[10];
         uint32_t data32[5];
     };
 
-    class client_message_event final : public generic_event {
+    class client_message_event_t final : public generic_event_t {
     public:
-        client_message_event(const generic_event event) : generic_event(event.get_pointer()) {}
+        client_message_event_t(const generic_event_t event)
+            : generic_event_t(event.get_pointer()) {}
 
         uint8_t get_format() const;
 
         // FIXME: add window
 
         uint32_t get_type() const;
-        const client_message_data& get_data() const;
+        const client_message_data_t& get_data() const;
     };
 
-    class configure_notify_event final : public generic_event {
+    class configure_notify_event_t final : public generic_event_t {
     public:
-        configure_notify_event(const generic_event event) : generic_event(event.get_pointer()) {}
+        configure_notify_event_t(const generic_event_t event)
+            : generic_event_t(event.get_pointer()) {}
 
         // FIXME: add window
 

@@ -8,7 +8,7 @@
 #include <utility>
 
 namespace xcbw {
-    enum class atom_type : uint32_t {
+    enum class atom_type_t : uint32_t {
         e_none = 0,
         e_any = 0,
         e_primary = 1,
@@ -81,29 +81,29 @@ namespace xcbw {
         e_wm_transient_for = 68
     };
 
-    using intern_atom_cookie = detail::xcb_value<uint32_t>;
+    using intern_atom_cookie_t = detail::xcb_value<uint32_t>;
 
-    class intern_atom {
+    class intern_atom_t {
     public:
-        explicit intern_atom(void* pointer) : m_pointer(pointer) {}
+        explicit intern_atom_t(void* pointer) : m_pointer(pointer) {}
 
-        intern_atom(connection& c, bool only_if_exists, uint16_t name_len, const char* name);
-        intern_atom(connection& c, bool only_if_exists, const char* name);
-        intern_atom(connection& c, intern_atom_cookie cookie);
-        ~intern_atom();
+        intern_atom_t(connection_t& c, bool only_if_exists, uint16_t name_len, const char* name);
+        intern_atom_t(connection_t& c, bool only_if_exists, const char* name);
+        intern_atom_t(connection_t& c, intern_atom_cookie_t cookie);
+        ~intern_atom_t();
 
-        intern_atom(const intern_atom& o) = delete;
-        intern_atom& operator=(const intern_atom& o) = delete;
+        intern_atom_t(const intern_atom_t& o) = delete;
+        intern_atom_t& operator=(const intern_atom_t& o) = delete;
 
-        intern_atom(intern_atom&& o) noexcept = default;
-        intern_atom& operator=(intern_atom&& o) noexcept = default;
+        intern_atom_t(intern_atom_t&& o) noexcept = default;
+        intern_atom_t& operator=(intern_atom_t&& o) noexcept = default;
 
         bool is_null() const { return (m_pointer == nullptr); }
 
         uint8_t get_response_type() const;
         uint16_t get_sequence() const;
         uint32_t get_length() const;
-        atom_type get_atom() const;
+        atom_type_t get_atom() const;
 
     protected:
         mutable void* m_pointer = nullptr;

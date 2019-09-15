@@ -8,6 +8,8 @@
 #include <xcb/xcb.h>
 
 namespace xcbw {
-    inline xcb_connection_t* get(const connection& c) { return (xcb_connection_t*)c.get_ptr(); }
-    inline xcb_screen_t* get(screen s) { return (xcb_screen_t*)s.get_ptr(); }
+    inline xcb_connection_t* get(const connection_t& c) {
+        return static_cast<xcb_connection_t*>(c.get_ptr());
+    }
+    inline xcb_screen_t* get(screen_t s) { return static_cast<xcb_screen_t*>(s.get_ptr()); }
 } // namespace xcbw

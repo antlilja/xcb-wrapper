@@ -10,7 +10,11 @@
 #include <functional>
 
 namespace xcbw {
-    enum class window_class : uint8_t { copy_from_parent = 0, input_output = 1, input_only = 2 };
+    enum class window_class_t : uint8_t {
+        e_copy_from_parent = 0,
+        e_input_output = 1,
+        e_input_only = 2
+    };
 
     // Attribute mask
     enum class wa_mask_bits : uint16_t {
@@ -34,16 +38,16 @@ namespace xcbw {
     using wa_mask = detail::enum_bit_field<wa_mask_bits>;
 
     template <typename... Values>
-    using window_attributes = detail::mask_and_values<wa_mask, uint32_t, Values...>;
+    using window_attributes_t = detail::mask_and_values<wa_mask, uint32_t, Values...>;
 
     template <typename... Values>
-    inline static constexpr window_attributes<Values...>
+    inline static constexpr window_attributes_t<Values...>
     make_window_attributes(const Values... values) {
-        return window_attributes<Values...>(values...);
+        return window_attributes_t<Values...>(values...);
     }
 
     // Attributes
-    using back_pixel = detail::attribute<wa_mask_bits, wa_mask_bits::e_back_pixel>;
+    using back_pixel_t = detail::attribute<wa_mask_bits, wa_mask_bits::e_back_pixel>;
 
     enum class event_mask_bits : uint32_t {
         e_no_event = 0,
@@ -74,7 +78,7 @@ namespace xcbw {
         e_owner_grab_button = 16777216
     };
 
-    using event_mask =
+    using event_mask_t =
         detail::attribute_bit_field<event_mask_bits, wa_mask_bits, wa_mask_bits::e_event_mask>;
 
     // Config mask
@@ -87,44 +91,25 @@ namespace xcbw {
         e_sibling = 32,
         e_stack_mode = 64
     };
-    using wc_mask = detail::enum_bit_field<wc_mask_bits>;
+    using wc_mask_t = detail::enum_bit_field<wc_mask_bits>;
 
     template <typename... Values>
-    using window_config = detail::mask_and_values<wc_mask, uint32_t, Values...>;
+    using window_config_t = detail::mask_and_values<wc_mask_t, uint32_t, Values...>;
 
     template <typename... Values>
-    inline static constexpr window_config<Values...> make_window_config(const Values... values) {
-        return window_config<Values...>(values...);
+    inline static constexpr window_config_t<Values...> make_window_config(const Values... values) {
+        return window_config_t<Values...>(values...);
     }
 
     // Configs
-    using window_x = detail::attribute<wc_mask_bits, wc_mask_bits::e_x>;
-    using window_y = detail::attribute<wc_mask_bits, wc_mask_bits::e_y>;
+    using window_x_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_x>;
+    using window_y_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_y>;
 
-    using window_width = detail::attribute<wc_mask_bits, wc_mask_bits::e_width>;
-    using window_height = detail::attribute<wc_mask_bits, wc_mask_bits::e_height>;
+    using window_width_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_width>;
+    using window_height_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_height>;
 
-    using window_border_width = detail::attribute<wc_mask_bits, wc_mask_bits::e_border_width>;
+    using window_border_width_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_border_width>;
 
     // Property
-    enum class prop_mode : uint8_t { replace = 0, prepend = 1, append = 2 };
-
-    template <typename... Values>
-    class property_data {
-        using T = typename std::tuple_element<0, std::tuple<Values...>>::type;
-
-    public:
-        inline constexpr property_data(const Values... values) : m_data({values...}) {}
-
-        inline constexpr uint8_t get_format() const {
-            return static_cast<uint8_t>((sizeof...(Values) * 8));
-        }
-
-        inline constexpr uint32_t get_len() const { return static_cast<uint32_t>(m_data.size()); }
-
-        inline constexpr T* get_data() const { return m_data.data(); }
-
-    private:
-        const std::array<T, sizeof...(Values)> m_data;
-    };
+    enum class property_mode_t : uint8_t { e_replace = 0, e_prepend = 1, e_append = 2 };
 } // namespace xcbw

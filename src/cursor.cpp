@@ -7,9 +7,9 @@
 #include <xcb/xcb_cursor.h>
 
 namespace xcbw {
-    void warp_pointer(const connection& c, std::optional<window> src_window,
-                      std::optional<window> dst_window, point<int16_t> src_pos,
-                      point<int16_t> src_size, point<int16_t> dst_pos) {
+    void warp_pointer(const connection_t& c, std::optional<window_t> src_window,
+                      std::optional<window_t> dst_window, point_t<int16_t> src_pos,
+                      point_t<int16_t> src_size, point_t<int16_t> dst_pos) {
 
         uint32_t src = src_window.has_value() ? src_window.value() : 0;
         uint32_t dst = dst_window.has_value() ? dst_window.value() : 0;
@@ -18,20 +18,20 @@ namespace xcbw {
                          src_size.x, src_pos.y, dst_pos.x, dst_pos.y);
     }
 
-    cursor_context::cursor_context(connection& c, screen s) {
+    cursor_context_t::cursor_context_t(connection_t& c, screen_t s) {
         if (const auto err = xcb_cursor_context_new(
                 get(c), get(s), reinterpret_cast<xcb_cursor_context_t**>(&m_pointer));
             err < 0) {
             throw std::runtime_error(
-                (std::string("XCB: Failed to create cursor_context: ") + std::to_string(err)));
+                (std::string("XCB: Failed to create cursor_context_t: ") + std::to_string(err)));
         }
     }
 
-    cursor_context::~cursor_context() {
+    cursor_context_t::~cursor_context_t() {
         xcb_cursor_context_free(static_cast<xcb_cursor_context_t*>(m_pointer));
     }
 
-    cursor::cursor(connection& c, pixmap source, pixmap mask, uint16_t fore_red,
+    cursor_t::cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
                    uint16_t fore_green, uint16_t fore_blue, uint16_t back_red, uint16_t back_green,
                    uint16_t back_blue, uint16_t x, uint16_t y) {
         const auto cookie = xcb_create_cursor_checked(
@@ -43,15 +43,15 @@ namespace xcbw {
             const auto code = err->error_code;
             free(err);
             throw std::runtime_error(
-                (std::string("XCB: Cannot create pixmap : ") + std::to_string(code)));
+                (std::string("XCB: Cannot create pixmap_t : ") + std::to_string(code)));
         }
     }
 
-    cursor::cursor(connection& c, cursor_context context, const char* name)
+    cursor_t::cursor_t(connection_t& c, cursor_context_t context, const char* name)
         : m_id(xcb_cursor_load_cursor(
               static_cast<xcb_cursor_context_t*>(static_cast<void*>(context)), name)) {}
 
-    void cursor::free_cursor(connection& c) {
+    void cursor_t::free_cursor(connection_t& c) {
         xcb_free_cursor(get(c), static_cast<xcb_cursor_t>(m_id));
     }
 

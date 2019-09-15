@@ -6,15 +6,15 @@
 #include "xcb_helper.hpp"
 
 namespace xcbw {
-    pixmap::pixmap(connection& c, uint8_t depth, drawable _drawable, uint16_t width,
+    pixmap_t::pixmap_t(connection_t& c, uint8_t depth, drawable_t drawable, uint16_t width,
                    uint16_t height)
         : m_id(xcb_generate_id(get(c))) {
 
         xcb_create_pixmap(get(c), depth, static_cast<xcb_pixmap_t>(m_id),
-                          static_cast<xcb_drawable_t>(_drawable), width, height);
+                          static_cast<xcb_drawable_t>(drawable), width, height);
     }
 
-    void pixmap::free_pixmap(connection& c) {
+    void pixmap_t::free_pixmap(connection_t& c) {
         xcb_free_pixmap(get(c), static_cast<xcb_pixmap_t>(m_id));
     }
 } // namespace xcbw

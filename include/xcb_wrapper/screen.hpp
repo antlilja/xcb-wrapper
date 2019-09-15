@@ -6,13 +6,13 @@
 #include "xcb_wrapper/window.hpp"
 
 namespace xcbw {
-    class screen {
+    class screen_t {
     public:
-        screen(const connection& c);
+        screen_t(const connection_t& c);
 
-        window get_root() const;
+        window_t get_root() const;
 
-        colormap get_default_colormap() const;
+        colormap_t get_default_colormap() const;
 
         uint32_t get_white_pixel() const;
         uint32_t get_black_pixel() const;
@@ -28,7 +28,7 @@ namespace xcbw {
         uint16_t get_min_installed_maps() const;
         uint16_t get_max_installed_maps() const;
 
-        visual_id get_root_visual() const;
+        visualid_t get_root_visual() const;
 
         uint8_t get_backing_stores() const;
 
