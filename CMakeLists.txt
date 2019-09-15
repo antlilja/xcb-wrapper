@@ -1,3 +1,6 @@
+# Copyright(c) 2019-present, Anton Lilja.
+# Distributed under the MIT License (http://opensource.org/licenses/MIT)
+
 cmake_minimum_required(VERSION 3.2)
 
 project(

@@ -1,3 +1,6 @@
+// Copyright(c) 2019-present, Anton Lilja.
+// Distributed under the MIT License (http://opensource.org/licenses/MIT)
+
 #include "xcb_wrapper/atom.hpp"
 
 #include "xcb_helper.hpp"

@@ -1,3 +1,6 @@
+// Copyright(c) 2019-present, Anton Lilja.
+// Distributed under the MIT License (http://opensource.org/licenses/MIT)
+
 #include <xcb_wrapper/xcb_wrapper.hpp>
 
 const auto c_event_mask = xcbw::event_mask(
