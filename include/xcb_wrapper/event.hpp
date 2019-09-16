@@ -6,7 +6,7 @@
 #include <cstdint>
 
 namespace xcbw {
-    enum class event_type_t {
+    enum class event_type_t : uint8_t {
         e_key_press = 2,
         e_key_release = 3,
         e_button_press = 4,
