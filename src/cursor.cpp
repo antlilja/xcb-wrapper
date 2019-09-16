@@ -35,7 +35,8 @@ namespace xcbw {
 
     cursor_t::cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
                        uint16_t fore_green, uint16_t fore_blue, uint16_t back_red,
-                       uint16_t back_green, uint16_t back_blue, uint16_t x, uint16_t y) {
+                       uint16_t back_green, uint16_t back_blue, uint16_t x, uint16_t y)
+        : m_id(xcb_generate_id(get(c))) {
         const auto cookie = xcb_create_cursor_checked(
             get(c), static_cast<xcb_cursor_t>(m_id), static_cast<xcb_pixmap_t>(source),
             static_cast<xcb_pixmap_t>(mask), fore_red, fore_blue, fore_green, back_red, back_green,
@@ -49,7 +50,7 @@ namespace xcbw {
         }
     }
 
-    cursor_t::cursor_t(connection_t& c, cursor_context_t context, const char* name)
+    cursor_t::cursor_t(connection_t& c, const cursor_context_t& context, const char* name)
         : m_id(xcb_cursor_load_cursor(
               static_cast<xcb_cursor_context_t*>(static_cast<void*>(context)), name)) {}
 

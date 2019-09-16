@@ -20,6 +20,12 @@ namespace xcbw {
         cursor_context_t(connection_t& c, screen_t s);
         ~cursor_context_t();
 
+        cursor_context_t(const cursor_context_t& o) = delete;
+        cursor_context_t& operator=(const cursor_context_t& o) = delete;
+
+        cursor_context_t(cursor_context_t&& o) noexcept = default;
+        cursor_context_t& operator=(cursor_context_t&& o) noexcept = default;
+
         inline operator void*() const { return m_pointer; }
 
     private:
@@ -39,7 +45,7 @@ namespace xcbw {
             : cursor_t(c, source, mask, fore_red, fore_blue, fore_green, back_red, back_green,
                        back_blue, pos.x, pos.y) {}
 
-        cursor_t(connection_t& c, cursor_context_t context, const char* name);
+        cursor_t(connection_t& c, const cursor_context_t& context, const char* name);
 
         void free_cursor(connection_t& c);
 
