@@ -47,8 +47,21 @@ namespace xcbw {
     }
 
     // Attributes
-    using back_pixel_t = detail::attribute<wa_mask_bits, wa_mask_bits::e_back_pixel>;
-    using window_cursor_t = detail::attribute<wa_mask_bits, wa_mask_bits::e_cursor>;
+    using back_pixmap_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_back_pixmap>;
+    using back_pixel_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_back_pixel>;
+    using border_pixmap_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_border_pixmap>;
+    using border_pixel_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_border_pixel>;
+    using bit_gravity_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_bit_gravity>;
+    using win_gravity_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_win_gravity>;
+    using backing_store_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_backing_store>;
+    using backing_planes_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_backing_planes>;
+    using backing_pixel_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_backing_pixel>;
+    using override_redirect_attrib =
+        detail::attribute<wa_mask_bits, wa_mask_bits::e_override_redirect>;
+    using save_under_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_save_under>;
+    using dont_propagate_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_dont_propagate>;
+    using colormap_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_colormap>;
+    using cursor_attrib = detail::attribute<wa_mask_bits, wa_mask_bits::e_cursor>;
 
     enum class event_mask_bits : uint32_t {
         e_no_event = 0,
@@ -79,7 +92,7 @@ namespace xcbw {
         e_owner_grab_button = 16777216
     };
 
-    using event_mask_t =
+    using event_mask_attrib =
         detail::attribute_bit_field<event_mask_bits, wa_mask_bits, wa_mask_bits::e_event_mask>;
 
     // Config mask
@@ -103,13 +116,14 @@ namespace xcbw {
     }
 
     // Configs
-    using window_x_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_x>;
-    using window_y_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_y>;
-
-    using window_width_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_width>;
-    using window_height_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_height>;
-
-    using window_border_width_t = detail::attribute<wc_mask_bits, wc_mask_bits::e_border_width>;
+    using window_x_config = detail::attribute<wc_mask_bits, wc_mask_bits::e_x>;
+    using window_y_config = detail::attribute<wc_mask_bits, wc_mask_bits::e_y>;
+    using window_width_config = detail::attribute<wc_mask_bits, wc_mask_bits::e_width>;
+    using window_height_config = detail::attribute<wc_mask_bits, wc_mask_bits::e_height>;
+    using window_border_width_config =
+        detail::attribute<wc_mask_bits, wc_mask_bits::e_border_width>;
+    using sibling_config = detail::attribute<wc_mask_bits, wc_mask_bits::e_sibling>;
+    using stack_mode_config = detail::attribute<wc_mask_bits, wc_mask_bits::e_stack_mode>;
 
     // Property
     enum class property_mode_t : uint8_t { e_replace = 0, e_prepend = 1, e_append = 2 };
