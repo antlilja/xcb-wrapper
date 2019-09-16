@@ -45,7 +45,7 @@ namespace xcbw {
             const auto code = err->error_code;
             free(err);
             throw std::runtime_error(
-                (std::string("XCB: Cannot create pixmap_t : ") + std::to_string(code)));
+                (std::string("XCB: Cannot create cursor_t : ") + std::to_string(code)));
         }
     }
 
