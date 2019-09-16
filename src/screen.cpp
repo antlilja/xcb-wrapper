@@ -6,7 +6,7 @@
 #include "xcb_helper.hpp"
 
 #define getter(T, V) \
-    T screen_t::get_##V() const { return (T)((xcb_screen_t*)m_pointer)->V; }
+    T screen_t::get_##V() const { return static_cast<T>(static_cast<xcb_screen_t*>(m_pointer)->V); }
 
 namespace xcbw {
     screen_t::screen_t(const connection_t& c)

@@ -11,11 +11,11 @@ namespace xcbw {
     window_t::window_t(const connection_t& c, window_class_t window_class, window_t parent,
                        int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t border_width,
                        visualid_t visual, const wa_mask_t mask, const uint32_t* values)
-        : m_id(static_cast<uint32_t>(xcb_generate_id((xcb_connection_t*)c.get_ptr()))) {
-        xcb_create_window((xcb_connection_t*)c.get_ptr(), XCB_COPY_FROM_PARENT,
-                          static_cast<xcb_window_t>(m_id), static_cast<xcb_window_t>(parent), x, y,
-                          width, height, border_width, static_cast<uint16_t>(window_class),
-                          static_cast<xcb_visualid_t>(visual), static_cast<uint32_t>(mask), values);
+        : m_id(static_cast<uint32_t>(xcb_generate_id(get(c)))) {
+        xcb_create_window(get(c), XCB_COPY_FROM_PARENT, static_cast<xcb_window_t>(m_id),
+                          static_cast<xcb_window_t>(parent), x, y, width, height, border_width,
+                          static_cast<uint16_t>(window_class), static_cast<xcb_visualid_t>(visual),
+                          static_cast<uint32_t>(mask), values);
     }
 
     void window_t::destroy(const connection_t& c) {

@@ -6,7 +6,7 @@
 #include <xcb/xcb.h>
 
 #define getter(C, T, V) \
-    T C::get_##V() const { return (T)((xcb_##C*)m_pointer)->V; }
+    T C::get_##V() const { return static_cast<T>(static_cast<xcb_##C*>(m_pointer)->V); }
 
 namespace xcbw {
     generic_event_t::generic_event_t(void* pointer) : m_pointer(pointer) {}
@@ -65,7 +65,10 @@ namespace xcbw {
 
     // client message data
     getter(client_message_event_t, uint32_t, type);
-    getter(client_message_event_t, const client_message_data_t&, data);
+    const client_message_data_t& client_message_event_t::get_data() const {
+        return reinterpret_cast<const client_message_data_t&>(
+            static_cast<xcb_client_message_event_t*>(m_pointer)->data);
+    }
 
     // configure_notify
     getter(configure_notify_event_t, int16_t, x);
