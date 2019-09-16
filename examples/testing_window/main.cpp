@@ -3,7 +3,7 @@
 
 #include <xcb_wrapper/xcb_wrapper.hpp>
 
-const auto c_event_mask = xcbw::event_mask_t(
+const auto c_event_mask = xcbw::event_mask_attrib(
     xcbw::event_mask_bits::e_exposure, xcbw::event_mask_bits::e_structure_notify,
     xcbw::event_mask_bits::e_enter_window, xcbw::event_mask_bits::e_leave_window,
     xcbw::event_mask_bits::e_key_press, xcbw::event_mask_bits::e_key_release,
@@ -34,7 +34,7 @@ public:
         : m_connection(nullptr, nullptr), m_screen(m_connection),
           m_window(m_connection, xcbw::window_class_t::e_input_output, m_screen.get_root(), {},
                    {960, 540}, 1, m_screen.get_root_visual(),
-                   xcbw::make_window_attributes(xcbw::back_pixel_t(m_screen.get_black_pixel()),
+                   xcbw::make_window_attributes(xcbw::back_pixel_attrib(m_screen.get_black_pixel()),
                                                 c_event_mask)),
           m_delete_window_atom(m_connection, false, "WM_DELETE_WINDOW"), m_open(true) {
 
