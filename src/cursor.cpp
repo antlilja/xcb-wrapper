@@ -6,6 +6,8 @@
 
 #include <xcb/xcb_cursor.h>
 
+#include <cstring>
+
 namespace xcbw {
     void warp_pointer(const connection_t& c, std::optional<window_t> src_window,
                       std::optional<window_t> dst_window, point_t<int16_t> src_pos,
@@ -32,8 +34,8 @@ namespace xcbw {
     }
 
     cursor_t::cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
-                   uint16_t fore_green, uint16_t fore_blue, uint16_t back_red, uint16_t back_green,
-                   uint16_t back_blue, uint16_t x, uint16_t y) {
+                       uint16_t fore_green, uint16_t fore_blue, uint16_t back_red,
+                       uint16_t back_green, uint16_t back_blue, uint16_t x, uint16_t y) {
         const auto cookie = xcb_create_cursor_checked(
             get(c), static_cast<xcb_cursor_t>(m_id), static_cast<xcb_pixmap_t>(source),
             static_cast<xcb_pixmap_t>(mask), fore_red, fore_blue, fore_green, back_red, back_green,

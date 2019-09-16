@@ -5,6 +5,8 @@
 
 #include "xcb_helper.hpp"
 
+#include <cstring>
+
 namespace xcbw {
     window_t::window_t(const connection_t& c, window_class_t window_class, window_t parent,
                        int16_t x, int16_t y, uint16_t width, uint16_t height, uint16_t border_width,
@@ -43,6 +45,11 @@ namespace xcbw {
         xcb_change_property(get(c), static_cast<uint8_t>(mode), static_cast<xcb_window_t>(m_id),
                             static_cast<xcb_atom_t>(atom), static_cast<xcb_atom_t>(type), format,
                             data_len, data);
+    }
+
+    void window_t::change_property(const connection_t& c, property_mode_t mode, atom_type_t atom,
+                                   atom_type_t type, const char* data) {
+        change_property(c, mode, atom, type, 8, std::strlen(data), data);
     }
 
     std::pair<void*, int32_t> window_t::get_property(const connection_t& c, atom_type_t property,

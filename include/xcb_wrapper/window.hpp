@@ -7,9 +7,6 @@
 
 #include "xcb_wrapper/window_params.hpp"
 
-#include <tuple>
-#include <cstring>
-
 namespace xcbw {
 
     using visualid_t = detail::xcb_value<uint32_t>;
@@ -65,9 +62,7 @@ namespace xcbw {
                              atom_type_t type, uint8_t format, uint32_t data_len, const void* data);
 
         void change_property(const connection_t& c, property_mode_t mode, atom_type_t atom,
-                             atom_type_t type, const char* data) {
-            change_property(c, mode, atom, type, 8, std::strlen(data), data);
-        }
+                             atom_type_t type, const char* data);
 
         template <typename T, typename = std::enable_if_t<!std::is_pointer<T>::value>>
         void change_property(const connection_t& c, property_mode_t mode, atom_type_t atom,

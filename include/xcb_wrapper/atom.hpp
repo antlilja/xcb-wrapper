@@ -5,8 +5,6 @@
 #include "xcb_wrapper/common.hpp"
 #include "xcb_wrapper/connection.hpp"
 
-#include <utility>
-
 namespace xcbw {
     enum class atom_type_t : uint32_t {
         e_none = 0,

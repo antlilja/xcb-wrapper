@@ -5,9 +5,7 @@
 #include "xcb_wrapper/common.hpp"
 #include "xcb_wrapper/atom.hpp"
 
-#include <array>
 #include <cstdint>
-#include <functional>
 
 namespace xcbw {
     enum class window_class_t : uint8_t {
