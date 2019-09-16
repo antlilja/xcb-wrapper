@@ -24,6 +24,7 @@ add_library(xcb_wrapper
     src/event.cpp
     src/atom.cpp
     src/cursor.cpp
+    src/drawable.cpp
 )
 
 add_library(xcb::wrapper ALIAS xcb_wrapper)
