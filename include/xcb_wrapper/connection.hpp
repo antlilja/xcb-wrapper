@@ -7,7 +7,7 @@
 namespace xcbw {
     class connection_t {
     public:
-        connection_t(const char* display_name, int* screen_p);
+        connection_t(const char* display_name = nullptr, int* screen_p = nullptr);
         ~connection_t();
 
         connection_t(const connection_t& o) = delete;
