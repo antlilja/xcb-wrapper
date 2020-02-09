@@ -17,7 +17,7 @@ namespace xcbw {
 
     class cursor_context_t {
     public:
-        cursor_context_t(connection_t& c, screen_t s);
+        cursor_context_t(const connection_t& c, screen_t s);
         ~cursor_context_t();
 
         cursor_context_t(const cursor_context_t& o) = delete;
@@ -35,19 +35,19 @@ namespace xcbw {
     class cursor_t {
     public:
         explicit cursor_t(uint32_t id) : m_id(id) {}
-        cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
+        cursor_t(const connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
                  uint16_t fore_green, uint16_t fore_blue, uint16_t back_red, uint16_t back_green,
                  uint16_t back_blue, uint16_t x, uint16_t y);
 
-        cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
+        cursor_t(const connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
                  uint16_t fore_green, uint16_t fore_blue, uint16_t back_red, uint16_t back_green,
                  uint16_t back_blue, point_t<uint16_t> pos)
             : cursor_t(c, source, mask, fore_red, fore_blue, fore_green, back_red, back_green,
                        back_blue, pos.x, pos.y) {}
 
-        cursor_t(connection_t& c, const cursor_context_t& context, const char* name);
+        cursor_t(const connection_t& c, const cursor_context_t& context, const char* name);
 
-        void free_cursor(connection_t& c);
+        void free_cursor(const connection_t& c);
 
         inline operator uint32_t() const { return m_id; }
 

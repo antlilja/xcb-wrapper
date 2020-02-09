@@ -6,7 +6,7 @@
 #include "xcb_helper.hpp"
 
 namespace xcbw {
-    pixmap_t::pixmap_t(connection_t& c, uint8_t depth, drawable_t drawable, uint16_t width,
+    pixmap_t::pixmap_t(const connection_t& c, uint8_t depth, drawable_t drawable, uint16_t width,
                        uint16_t height)
         : m_id(xcb_generate_id(get(c))) {
 
@@ -22,7 +22,7 @@ namespace xcbw {
         }
     }
 
-    void pixmap_t::free_pixmap(connection_t& c) {
+    void pixmap_t::free_pixmap(const connection_t& c) {
         xcb_free_pixmap(get(c), static_cast<xcb_pixmap_t>(m_id));
     }
 } // namespace xcbw

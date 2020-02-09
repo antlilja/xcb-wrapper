@@ -20,7 +20,7 @@ namespace xcbw {
                          src_size.x, src_pos.y, dst_pos.x, dst_pos.y);
     }
 
-    cursor_context_t::cursor_context_t(connection_t& c, screen_t s) {
+    cursor_context_t::cursor_context_t(const connection_t& c, screen_t s) {
         if (const auto err = xcb_cursor_context_new(
                 get(c), get(s), reinterpret_cast<xcb_cursor_context_t**>(&m_pointer));
             err < 0) {
@@ -33,7 +33,7 @@ namespace xcbw {
         xcb_cursor_context_free(static_cast<xcb_cursor_context_t*>(m_pointer));
     }
 
-    cursor_t::cursor_t(connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
+    cursor_t::cursor_t(const connection_t& c, pixmap_t source, pixmap_t mask, uint16_t fore_red,
                        uint16_t fore_green, uint16_t fore_blue, uint16_t back_red,
                        uint16_t back_green, uint16_t back_blue, uint16_t x, uint16_t y)
         : m_id(xcb_generate_id(get(c))) {
@@ -50,11 +50,11 @@ namespace xcbw {
         }
     }
 
-    cursor_t::cursor_t(connection_t& c, const cursor_context_t& context, const char* name)
+    cursor_t::cursor_t(const connection_t& c, const cursor_context_t& context, const char* name)
         : m_id(xcb_cursor_load_cursor(
               static_cast<xcb_cursor_context_t*>(static_cast<void*>(context)), name)) {}
 
-    void cursor_t::free_cursor(connection_t& c) {
+    void cursor_t::free_cursor(const connection_t& c) {
         xcb_free_cursor(get(c), static_cast<xcb_cursor_t>(m_id));
     }
 

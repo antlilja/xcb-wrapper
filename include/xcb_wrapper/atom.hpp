@@ -85,9 +85,10 @@ namespace xcbw {
     public:
         explicit intern_atom_t(void* pointer) : m_pointer(pointer) {}
 
-        intern_atom_t(connection_t& c, bool only_if_exists, uint16_t name_len, const char* name);
-        intern_atom_t(connection_t& c, bool only_if_exists, const char* name);
-        intern_atom_t(connection_t& c, intern_atom_cookie_t cookie);
+        intern_atom_t(const connection_t& c, bool only_if_exists, uint16_t name_len,
+                      const char* name);
+        intern_atom_t(const connection_t& c, bool only_if_exists, const char* name);
+        intern_atom_t(const connection_t& c, intern_atom_cookie_t cookie);
         ~intern_atom_t();
 
         intern_atom_t(const intern_atom_t& o) = delete;
